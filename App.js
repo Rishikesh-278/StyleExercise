@@ -1,33 +1,29 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, } from "react-native";
+import { StyleSheet, Text, View, Image, FlatList, ToastAndroid, } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import ColorCircle from "./components/colorCircle";
+import ColorPalette from "./screens/ColorPalette";
 import ColorBox from "./components/colorBox";
+import Home from "./screens/home";
+
+const Stack = createStackNavigator();
+
+//navigation.navigate('ColorPalette', { paletteName: 'Solarized', colors: COLORS });
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
-        <Text style={styles.text}>Here are some boxes of different colours</Text>
-        <ColorBox ColorName="Cyan" hexCode="#2aa198" />
-        <ColorBox ColorName="Blue" hexCode="#268bd2" />
-        <ColorBox ColorName="Magenta" hexCode="#d33682" />
-        <ColorBox ColorName="Orange" hexCode="#cb4b16" />
-      </View>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="ColorPalette" component={ColorPalette}
+          options={({ route }) => ({ title: route.params.paletteName })}
+        />
+      </Stack.Navigator >
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 10,
-    
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: "bold",
-    margin: 10,
-  },
-});
-
 
 export default App;
